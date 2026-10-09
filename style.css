@@ -1,0 +1,543 @@
+/* ==========================================================================
+   fuyichen的前端网页作品集
+   视觉风格参考：深色金融科技落地页（粉红强调色体系）
+   - 近黑青绿背景 + 玫红强调色
+   - Poppins 字体层级、大留白、圆角卡片
+   - 粉色元素：圆点徽标 / 数字编号 / 胶囊标签 / 描边按钮 / 径向光晕
+   布局结构保持原样：标题 + 副标题 + 作品卡片
+   ========================================================================== */
+
+/* ------------------------------ 设计变量 ------------------------------ */
+:root {
+  /* 背景层级 */
+  --bg: #0a1514;
+  --surface: #162421;
+  --surface-2: #1c2c29;
+
+  /* 主色 / 辅助色 */
+  --primary: #f0455a;
+  --primary-dark: #d8384c;
+  --primary-light: #ff7080;
+  --primary-soft: rgba(240, 69, 90, 0.14);
+  --primary-line: rgba(240, 69, 90, 0.34);
+
+  /* 文字 */
+  --text-heading: #eaf2f1;
+  --text-body: #93a7a4;
+  --text-muted: #6b7f7d;
+
+  /* 描边 */
+  --border: #26362f;
+  --border-strong: #35504a;
+
+  /* 圆角 */
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* 阴影 / 粉色光晕 */
+  --shadow: 0 16px 34px -20px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 34px 64px -32px rgba(0, 0, 0, 0.92);
+  --glow-sm: 0 0 0 6px rgba(240, 69, 90, 0.09);
+  --glow: 0 14px 34px -12px rgba(240, 69, 90, 0.6);
+  --glow-lg: 0 20px 44px -14px rgba(240, 69, 90, 0.7);
+
+  /* 动效 */
+  --transition: all 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ------------------------------ 基础重置 ------------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Poppins", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  /* 顶部与右侧各一层粉色径向光晕，还原参考图的氛围感 */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(
+      880px 440px at 50% -4%,
+      rgba(240, 69, 90, 0.16),
+      transparent 66%
+    ),
+    radial-gradient(
+      620px 380px at 96% 42%,
+      rgba(240, 69, 90, 0.07),
+      transparent 70%
+    );
+  background-repeat: no-repeat;
+  color: var(--text-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(240, 69, 90, 0.34);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ------------------------------ 布局容器 ------------------------------ */
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 84px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* ============================== 页头 ============================== */
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 参考图顶部那颗玫红圆点 */
+.header-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--primary-light), var(--primary));
+  box-shadow: var(--glow-sm), var(--glow-lg);
+  margin-bottom: 34px;
+  animation: dot-pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    box-shadow: var(--glow-sm), var(--glow-lg);
+  }
+  50% {
+    box-shadow:
+      0 0 0 13px rgba(240, 69, 90, 0.05),
+      0 18px 40px -14px rgba(240, 69, 90, 0.45);
+  }
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--text-heading);
+}
+
+/* 参考图标题里的强调色 */
+.title-accent {
+  color: var(--primary);
+}
+
+header p {
+  margin-top: 22px;
+  font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+/* ============================== 作品网格 ============================== */
+.result-heading {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.result-heading:empty {
+  display: none;
+}
+
+.meals-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ============================== 作品卡片 ============================== */
+.meal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* 卡片顶部一条粉色细线（参考图卡片的受光/描边边缘） */
+.meal::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(240, 69, 90, 0.55),
+    transparent
+  );
+  opacity: 0.45;
+  z-index: 3;
+  transition: var(--transition);
+}
+
+.meal:hover {
+  transform: translateY(-6px);
+  background: var(--surface-2);
+  border-color: var(--primary-line);
+  box-shadow: var(--shadow-lg), var(--glow);
+}
+
+.meal:hover::before {
+  opacity: 1;
+}
+
+/* --- 缩略图 --- */
+.meal-thumb {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: #0f1c1a;
+}
+
+.meal img {
+  width: 100%;
+  height: 206px;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.meal:hover img {
+  transform: scale(1.045);
+}
+
+/* 悬停时从底部透出的粉色光晕 */
+.meal-glow {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 66%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(240, 69, 90, 0.22) 60%,
+    rgba(10, 21, 20, 0.9)
+  );
+  opacity: 0;
+  transition: var(--transition);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.meal:hover .meal-glow {
+  opacity: 1;
+}
+
+/* 图片左上角的粉色数字编号 */
+.meal-num {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 0 0 4px rgba(10, 21, 20, 0.55), var(--glow);
+  transition: var(--transition);
+}
+
+.meal:hover .meal-num {
+  transform: scale(1.1);
+}
+
+/* --- 卡片文字区 --- */
+.meal-info {
+  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.meal-title {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+/* 粉色胶囊标签 */
+.meal-category {
+  align-self: flex-start;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  border: 1px solid var(--primary-line);
+  color: var(--primary-light);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+}
+
+.meal:hover .meal-category {
+  background: rgba(240, 69, 90, 0.24);
+  color: #ffd7dc;
+}
+
+/* 粉色描边胶囊按钮（参考图的 "Try demo" 造型） */
+.meal-open {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(240, 69, 90, 0.1);
+  border: 1px solid var(--primary-line);
+  color: var(--primary-light);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.meal-open i {
+  font-size: 0.75rem;
+  transition: var(--transition);
+}
+
+.meal:hover .meal-open {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: var(--glow);
+}
+
+.meal:hover .meal-open i {
+  transform: translateX(3px);
+}
+
+/* ============================== 详情面板 ============================== */
+#meal-details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+#back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 24px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(240, 69, 90, 0.1);
+  border: 1px solid var(--primary-line);
+  color: var(--primary-light);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#back-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: var(--glow);
+}
+
+.meal-details-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meal-details-img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.meal-details-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-heading);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.meal-details-category {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.meal-details-category span {
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  border: 1px solid var(--primary-line);
+  color: var(--primary-light);
+  font-size: 0.875rem;
+}
+
+.meal-details-instructions {
+  margin-bottom: 22px;
+  line-height: 1.8;
+}
+
+.meal-details-instructions h3 {
+  margin-bottom: 8px;
+  font-size: 1.0625rem;
+  color: var(--text-heading);
+}
+
+.ingredients-list {
+  list-style: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.ingredients-list li {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.ingredients-list li i {
+  margin-right: 9px;
+  color: var(--primary-light);
+}
+
+.youtube-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--glow);
+  transition: var(--transition);
+}
+
+.youtube-link:hover {
+  background: var(--primary-dark);
+}
+
+/* ============================== 提示条 ============================== */
+#error-container {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  border: 1px solid var(--primary-line);
+  color: var(--primary-light);
+  text-align: center;
+}
+
+/* ============================== 响应式 ============================== */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 54px 18px 66px;
+    gap: 38px;
+  }
+
+  .header-dot {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 26px;
+  }
+
+  header p {
+    margin-top: 16px;
+  }
+
+  .meals-container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .meal img {
+    height: 190px;
+  }
+
+  .meal-info {
+    padding: 20px 20px 22px;
+  }
+
+  #meal-details {
+    padding: 20px;
+  }
+}
+
+/* 尊重系统的减弱动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .header-dot {
+    animation: none;
+  }
+
+  .meal,
+  .meal img {
+    transition: none;
+  }
+}

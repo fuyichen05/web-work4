@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fuyichen的前端网页作品集</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="header-dot" aria-hidden="true"></span>
+            <h1><span class="title-accent">fuyichen</span>的前端网页作品集</h1>
+            <p>这是我的前端网页作品，点击跳转到具体的页面</p>
+        </header>
+
+        <div id="error-container" class="hidden">
+            <p>No meals found. Try another input.</p>
+        </div>
+
+        <div class="result-heading" id="result-heading"></div>
+
+        <div id="meals" class="meals-container">
+
+            <article class="meal" data-url="https://web-work2-nine.vercel.app/">
+                <div class="meal-thumb">
+                    <img src="./img/quiztime.png" alt="Quiz Time 项目预览">
+                    <span class="meal-num">1</span>
+                    <span class="meal-glow" aria-hidden="true"></span>
+                </div>
+                <div class="meal-info">
+                    <h3 class="meal-title">Quiz Time</h3>
+                    <div class="meal-category">Quiz</div>
+                    
+                </div>
+            </article>
+
+            <article class="meal" data-url="https://web-work1-xi.vercel.app/">
+                <div class="meal-thumb">
+                    <img src="./img/register.png" alt="Register Form 项目预览">
+                    <span class="meal-num">2</span>
+                    <span class="meal-glow" aria-hidden="true"></span>
+                </div>
+                <div class="meal-info">
+                    <h3 class="meal-title">Register From</h3>
+                    <div class="meal-category">Register</div>
+                    
+                </div>
+            </article>
+
+            <article class="meal" data-url="https://web-work3.vercel.app/">
+                <div class="meal-thumb">
+                    <img src="./img/recipe.png" alt="Recipe Finder 项目预览">
+                    <span class="meal-num">3</span>
+                    <span class="meal-glow" aria-hidden="true"></span>
+                </div>
+                <div class="meal-info">
+                    <h3 class="meal-title">Recipe Finder</h3>
+                    <div class="meal-category">Recipe</div>
+                    
+                </div>
+            </article>
+
+        </div>
+
+        <div id="meal-details" class="hidden">
+            <button id="back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Back to recipes
+            </button>
+            <div class="meal-details-content"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
